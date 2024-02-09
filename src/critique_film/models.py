@@ -2,26 +2,23 @@
 from .database import db
 from datetime import datetime
 
-class Utilisateur(db.Model):
+class Clients(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
-    mot_de_passe_hash = db.Column(db.String(500), nullable=False)
-    critiques= db.relationship('Critique', backref='utilisateur', lazy='dynamic')
+    test = db.Column(db.String(80), unique=True, nullable=False)
 
 
-class Film(db.Model):
+class Chambre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    titre = db.Column(db.String(100), nullable=False)
-    realisateur = db.Column(db.String(100))
-    annee_sortie = db.Column(db.Integer)
-    genre = db.Column(db.String(100))
-    # critiques = db.relationship('Critique', backref='film', lazy='dynamic')
-class Critique(db.Model):
+    nurméro = db.Column(db.String(10), unique=True, nullable=False)
+    prix = db.Column(db.Float, nullable=False)
+    reservations = db.relationship('Reservation', backref='chambre', lazy='dynamic')
+
+
+class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    contenu = db.Column(db.Text, nullable=False)
-    date_post = db.Column(db.DateTime, default=datetime.utcnow)
-    date_posts = db.Column(db.DateTime, default=datetime.utcnow)
-    id_utilisateur = db.Column(db.Integer, db.ForeignKey('utilisateur.id'))
-    id_film = db.Column(db.Integer, db.ForeignKey('film.id'))
-    film = db.relationship('Film', backref='critique', lazy=True)
+    id_chambre = db.Column(db.Integer, db.ForeignKey('chambre.id'))
+    date_arrivee = db.Column(db.DateTime, nullable=False)
+    date_depart = db.Column(db.DateTime, nullable=False)
+    statut = db.Column(db.String(50), nullable=False)

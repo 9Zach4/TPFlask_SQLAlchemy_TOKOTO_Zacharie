@@ -16,7 +16,7 @@ services:
     restart: always 
     environment:
       MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: critiques_de_films
+      MYSQL_DATABASE: hotel
     volumes:
       - mysql_data:/var/lib/mysql
 

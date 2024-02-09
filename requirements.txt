@@ -4,3 +4,4 @@ pymysql
 flask-migrate
 flask-wtf
 email_validator
+pip

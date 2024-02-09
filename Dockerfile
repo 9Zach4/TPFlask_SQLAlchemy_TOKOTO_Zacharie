@@ -4,6 +4,7 @@ FROM python:3.9
 # COPY <Hote_chemin> <conteneur_chemin>
 COPY requirements.txt  /app/requirements.txt
 RUN pip install -r /app/requirements.txt
+WORKDIR /app
 
 COPY src /app
 ENV FLASK_APP=/app/src/critique_film

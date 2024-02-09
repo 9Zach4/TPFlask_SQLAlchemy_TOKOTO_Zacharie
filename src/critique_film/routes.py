@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from .forms import InscriptionForm, AjoutFilmForm, CritiqueForm
 from werkzeug.security import generate_password_hash
 from .database import db
-from .models import Utilisateur, Film, Critique
+from .models import *
 
 
 main = Blueprint('main', __name__)
