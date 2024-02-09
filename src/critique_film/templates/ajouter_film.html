@@ -1,0 +1,9 @@
+<h2>Ajouter un Film</h2>
+<form method="post">
+    {{ form.hidden_tag() }}
+    {{ form.titre.label }} {{ form.titre() }}<br>
+    {{ form.realisateur.label }} {{ form.realisateur() }}<br>
+    {{ form.annee_sortie.label }} {{ form.annee_sortie() }}<br>
+    {{ form.genre.label }} {{ form.genre() }}<br>
+    {{ form.submit() }}
+</form>
