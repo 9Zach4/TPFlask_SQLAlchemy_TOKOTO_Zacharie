@@ -11,7 +11,6 @@ def index():
     return render_template('index.html')
 
 
-
 def inscription():
     new_clients = [
         Client(name='Moussa', email='moussa@gmail.com'),
@@ -21,6 +20,7 @@ def inscription():
     db.session.add_all(new_clients)
     db.session.commit()
     return jsonify(Client.name)
+
 
 @main.route('/api/client/liste', methods=['GET'])
 def client_list():
@@ -35,7 +35,6 @@ def client_list():
         }
         client_liste.append(client_dict)
     return jsonify(client_liste), 200
-
 
 
 def room_list():
@@ -62,6 +61,7 @@ def room_list():
   db.session.add_all(luxuryRoom)
   db.session.commit()
 
+
 @main.route('/api/chambres/liste', methods=['GET'])
 def room_list():
 
@@ -78,6 +78,7 @@ def room_list():
         chambre_liste.append(chambre_dict)
 
     return jsonify(chambre_liste), 200
+
 
 @main.route('/api/chambres/disponibles', methods=['GET'])
 def room_available():
@@ -105,6 +106,7 @@ def room_available():
         if chambre_disponible:
             chambres_disponibles.append(chambre_dict)
     return jsonify(chambres_disponibles), 200
+
 
 @main.route('/api/reservations', methods=['POST'])
 def reservation():
@@ -134,7 +136,6 @@ def check_room_availability(id_chambre, date_arrivee, date_depart):
     date_arrivee = datetime.strptime(date_arrivee, '%Y-%m-%d')
     date_depart = datetime.strptime(date_depart, '%Y-%m-%d')
 
-    
     reservations = Reservation.query.filter_by(id_chambre=id_chambre).all()
 
     for reservation in reservations:
@@ -142,6 +143,7 @@ def check_room_availability(id_chambre, date_arrivee, date_depart):
             return False
 
     return True
+
 
 @main.route('/api/reservations/<int:id>', methods=['DELETE'])
 def delete_reservation(id):
@@ -151,6 +153,7 @@ def delete_reservation(id):
     db.session.delete(reservation)
     db.session.commit()
     return jsonify({"message": "Réservation annulée avec succès"}), 200
+
 
 @main.route('/api/chambres', methods=['POST'])
 def add_room():
@@ -168,7 +171,6 @@ def add_room():
     if existing_room:
         return jsonify({'error': 'Une chambre avec ce numéro existe déjà.'}), 409  
 
-    
     chambre = Chambre(id= id, number=number, type=type, price=price)
    
     db.session.add(chambre)
@@ -185,6 +187,7 @@ def delete_room(id):
     db.session.delete(chambre)
     db.session.commit()
     return jsonify({"message": "Chambre supprimée avec succès"}), 200
+
 
 @main.route('/api/chambres/<int:id>', methods=['PUT'])
 def update_room(id):
