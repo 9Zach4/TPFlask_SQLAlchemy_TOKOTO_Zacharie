@@ -151,3 +151,37 @@ def delete_reservation(id):
     db.session.delete(reservation)
     db.session.commit()
     return jsonify({"message": "Réservation annulée avec succès"}), 200
+
+@main.route('/api/chambres', methods=['POST'])
+def add_room():
+    data = request.json
+
+    if not all(key in data for key in ['id', 'number', 'type', 'price']):
+        return jsonify({'error': 'Toutes les informations de la chambre sont requises.'}), 400
+    
+    id = data.get('id')
+    number = data.get('number')
+    type = data.get('type')
+    price = data.get('price')
+
+    existing_room = Chambre.query.filter_by(number=number).first()
+    if existing_room:
+        return jsonify({'error': 'Une chambre avec ce numéro existe déjà.'}), 409  
+
+    
+    chambre = Chambre(id= id, number=number, type=type, price=price)
+   
+    db.session.add(chambre)
+    db.session.commit()
+
+    return jsonify({"success": True, "message": "Chambre ajoutée avec succès."}), 201
+
+
+@main.route('/api/chambres/<int:id>', methods=['DELETE'])
+def delete_room(id):
+    chambre = Chambre.query.get(id)
+    if not chambre:
+        return jsonify({"message": "La chambre n'existe pas"}), 404
+    db.session.delete(chambre)
+    db.session.commit()
+    return jsonify({"message": "Chambre supprimée avec succès"}), 200
