@@ -83,6 +83,8 @@ def room_list():
 def room_available():
     date_arrivee_str = request.args.get('date_arrivee')
     date_depart_str = request.args.get('date_depart')
+    # date_arrivee= 2024-02-15
+    # date_depart=24-02-20
 
     date_arrivee = datetime.strptime(date_arrivee_str, '%Y-%m-%d')
     date_depart = datetime.strptime(date_depart_str, '%Y-%m-%d')
@@ -112,11 +114,9 @@ def reservation():
     date_depart = request.json.get('date_depart')
 
     chambre_disponible = check_room_availability(id_chambre, date_arrivee, date_depart)
-
     
     if not chambre_disponible:
-        return jsonify({"success": False, "message": "La chambre n'est pas disponible pour les dates demandées."}), 400
-
+        return jsonify({"message": "La chambre n'est pas disponible pour les dates demandées."}), 400
 
     reservation = Reservation(
         id_client=id_client,
@@ -142,3 +142,12 @@ def check_room_availability(id_chambre, date_arrivee, date_depart):
             return False
 
     return True
+
+@main.route('/api/reservations/<int:id>', methods=['DELETE'])
+def delete_reservation(id):
+    reservation = Reservation.query.get(id)
+    if not reservation:
+        return jsonify({"message": "La reservation n'existe pas"}), 404
+    db.session.delete(reservation)
+    db.session.commit()
+    return jsonify({"message": "Réservation annulée avec succès"}), 200
