@@ -19,3 +19,10 @@
     "date_depart": "2024-08-27"
   
 } `  
+
+### 3. Annulation de Réservation
+
+**Endpoint :** `/api/reservations/{id}`  
+- exemple ` http://localhost:5000/api/reservation/4`
+
+
