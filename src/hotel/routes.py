@@ -157,7 +157,7 @@ def add_room():
     data = request.json
 
     if not all(key in data for key in ['id', 'number', 'type', 'price']):
-        return jsonify({'error': 'Toutes les informations de la chambre sont requises.'}), 400
+        return jsonify({'error': 'Informations manquante.'}), 400
     
     id = data.get('id')
     number = data.get('number')
@@ -174,7 +174,7 @@ def add_room():
     db.session.add(chambre)
     db.session.commit()
 
-    return jsonify({"success": True, "message": "Chambre ajoutée avec succès."}), 201
+    return jsonify({"message": "Chambre ajoutée avec succès."}), 201
 
 
 @main.route('/api/chambres/<int:id>', methods=['DELETE'])
