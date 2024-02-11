@@ -1,6 +1,0 @@
-<h2>Films</h2>
-<ul>
-    {% for film in films %}
-        <li><a href="{{ url_for('main.film_detail', id=film.id) }}">{{ film.titre }}</a></li>
-    {% endfor %}
-</ul>

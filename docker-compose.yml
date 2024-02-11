@@ -6,8 +6,8 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./src/critique_film:/app/src/critique_film
-      - flask_migrations:/app/src/critique_film/migrations
+      - ./src/hotel:/app/src/hotel
+      - flask_migrations:/app/src/hotel/migrations
     depends_on:
       - db
 
