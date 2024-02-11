@@ -70,10 +70,10 @@ def room_list():
     chambre_liste = []
     for chambre in chambres:
         chambre_dict = {
-            'numero': chambre.number,
+            'number': chambre.number,
             'type': chambre.type,
             "id": chambre.id,
-            'prix': chambre.price
+            'price': chambre.price
         }
         chambre_liste.append(chambre_dict)
 
@@ -94,9 +94,9 @@ def room_available():
     for chambre in chambres:
         reservations = Reservation.query.filter(Reservation.id_chambre == chambre.id).all()
         chambre_dict = {
-            'numero': chambre.number,
+            'number': chambre.number,
             'type': chambre.type,
-            'prix': chambre.price
+            'price': chambre.price
         }
         chambre_disponible = True
         for reservation in reservations:
@@ -185,3 +185,15 @@ def delete_room(id):
     db.session.delete(chambre)
     db.session.commit()
     return jsonify({"message": "Chambre supprimée avec succès"}), 200
+
+@main.route('/api/chambres/<int:id>', methods=['PUT'])
+def update_room(id):
+    chambre = Chambre.query.get(id)
+    if not chambre:
+        return jsonify({"message": "La chambre n'existe pas"}), 404
+    data = request.json
+    chambre.number = data.get('number')
+    chambre.type = data.get('type')
+    chambre.price = data.get('price')
+    db.session.commit()
+    return jsonify({"message": "Chambre modifiée avec succès"}), 200
