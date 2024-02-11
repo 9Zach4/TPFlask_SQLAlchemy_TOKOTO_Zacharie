@@ -9,8 +9,12 @@
 * ### 2. Création de Réservation
 **Endpoint :** `/api/reservations`
 - exemple de requête *POST* sur postman  `{
-    "id_client": 1,  
-    "id_chambre": 1,  
-    "date_arrivee": "2024-06-15",  
-    "date_depart": "2024-08-27"   
+    "id_client": 1,
+  
+    "id_chambre": 1,
+    
+    "date_arrivee": "2024-06-15",
+  
+    "date_depart": "2024-08-27"
+  
 } `  
